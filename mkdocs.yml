@@ -11,7 +11,7 @@ site_author: Facundo Ortiz
 
 theme: 
     name: material
-    favicon: 'img/favicon.ico'
+    favicon: img/favicon.ico
     features: 
         - tabs
     palette:

@@ -1,4 +1,4 @@
-# draw.io-examples
+# We ❤️ diagrams
 Some quick tutorials and general resources
 
 Working with diagrams.net 
