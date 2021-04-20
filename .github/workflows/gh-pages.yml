@@ -1,4 +1,4 @@
-name: build and deploy mkdocs to github pages
+name: Build Github Page
 on:
   push:
     branches:
@@ -30,4 +30,5 @@ jobs:
       - name: Deploy 
         run: | 
           git pull 
+          git checkout playbook_docs
           mkdocs gh-deploy 
