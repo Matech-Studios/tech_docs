@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://github.com/Matech-Studios/0_preface/">
       
       <link rel="icon" href="../img/matech.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6f955dcd.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e35208c4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
@@ -327,6 +327,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#goal" class="md-nav__link">
     Goal
   </a>
@@ -544,8 +551,14 @@
                 <h1 id="preface">Preface<a class="headerlink" href="#preface" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">Abstract</p>
-<p>This section introduces the most relevant information of the solution detailed in the playbook.</p>
+<p>This section introduces the most relevant information of the solution detailed in the playbook. (<strong>3 min read</strong>)</p>
 </div>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">&para;</a></h2>
+<!-- Describe briefly a minimum background required to set the reader in a proper context -->
+
+<p>StarvApp is an application intended to provide suitable recipes for what the user has in the fridge. Therefore, the application should be able to select the best recipes that match with the ingredients that the user has, as well as the cooking habits collected from the usage of the application. </p>
+<p>In order to make suitable recommendations, we decided to create a new service that interact with the existing services in the application to provide a selection of recommended recipes for the input ingredients entered by the user. The approach taken to recommend recipes is through a basic matching schema that uses fields like score, matching ingredients, and time preparation to rank the best recipes for a given input. Then, a Python service was developed that connects to a AMQP queue to recipe input and deliver recommendations in real time.</p>
+<p>This playbook is intented to explain how this recipes recommender was developed, from the understanding of the problem to the validation of the solution integrated in the application. It is written for a reader that is interested in knowing how to obtain a recommender system for this context of the application, so the information will have technical details at different levels.</p>
 <h2 id="goal">Goal<a class="headerlink" href="#goal" title="Permanent link">&para;</a></h2>
 <!-- What is the purpose of the solution -->
 
@@ -616,7 +629,7 @@
 <tr>
 <td>Aio-pika</td>
 <td>6.7</td>
-<td>Connection to RabbitMQ with asyncio</td>
+<td>Connection to RabbitMQ (AMQP connection) with asyncio capabilities</td>
 </tr>
 </tbody>
 </table>

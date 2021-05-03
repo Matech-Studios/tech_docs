@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://github.com/Matech-Studios/2_preparation/">
       
       <link rel="icon" href="../img/matech.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6f955dcd.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e35208c4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
@@ -557,7 +557,7 @@
                 <h1 id="chapter-2-preparation">Chapter 2: Preparation<a class="headerlink" href="#chapter-2-preparation" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">Abstract</p>
-<p>This chapter covers the preparation in terms of the approach and architecture defined for the solution, as well as the setup of the development environment. (<strong>X min read</strong>)</p>
+<p>This chapter covers the preparation in terms of the approach and architecture defined for the solution, as well as the setup of the development environment. (<strong>5 min read</strong>)</p>
 </div>
 <h2 id="approach">Approach<a class="headerlink" href="#approach" title="Permanent link">&para;</a></h2>
 <!-- Document the approach taken to develop the solution based on the defined requirements and knowledge about the project -->
@@ -599,30 +599,71 @@
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
 <!-- Describe the architecture of the solution, including diagrams and proper details to understand the workflows at high level -->
 
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>To be filled soon...</p>
-</div>
+<p>The solution must be integrated with the rest of the application by interacting with the backend through a proper bus. Therefore, this is the general architecture that the service had to meet to allow the integration. </p>
+<p><img alt="Architecture diagram" src="../img/architecture.png" /></p>
+<p>These are the steps that the application takes in the normal flow:</p>
+<ol>
+<li>The <strong>App</strong> registers the input of the user and requests recipes to the <strong>Recipes API</strong>.</li>
+<li>The <strong>Recipes API</strong> gets data from the Database and do the pre-processing of the data to prepare it for the <strong>Data Analytics</strong> service.</li>
+<li>The <strong>Recipes API</strong> publishes the pre-processed data to the <em>Events Bus</em> and waits for the recommended recipes that the <strong>Data Analitycs</strong> will return by subscribing to a configured topic of the bus (e.g. <code>recipes/{clientId}</code>).</li>
+<li>The <strong>Data Analitycs</strong> is subscribed to the configured topic of the <em>Event Bus</em> and gets the pre-processed data published by the <strong>Recipes API</strong>.</li>
+<li>The <strong>Data Analitycs</strong> processes the data to get a set of recommended recipes, and publishes the selected recipes to the <em>Event Bus</em> on the same configured topic.</li>
+<li>The <strong>Recipes API</strong> gets the data with the recommended recipes from the <em>Events Bus</em>.</li>
+<li>The <strong>Recipes API</strong> returns the response to the <strong>App</strong>.</li>
+</ol>
+<p>It is important to highlight that if this process from step 4 to 6 takes more than a configured window in seconds, the <strong>Recipes API</strong> will return a default response to the <strong>App</strong> which is just a header of the recipes retrieved in the step 2.</p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <!-- Describe all the needed steps to setup a proper development environment -->
 
 <h4 id="code-repository">Code Repository<a class="headerlink" href="#code-repository" title="Permanent link">&para;</a></h4>
-<p>From scaffold? List Dependencies</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>To be filled soon...</p>
-</div>
+<p>At this moment of the project, we didn't have a proper scaffolding nor boilerplate to setup the code repository. Therefore, a new repository was started from scratch, taking into account:</p>
+<ul>
+<li>Repository name following the name convention followed in Matech, so it was named <code>Matech.Starvapp.RecipesRecomender.Analytics</code>.</li>
+<li>A Python package to develop the actual logic to process the data</li>
+<li>A folder with the script for the service</li>
+<li>A folder to place the notebooks intended for exploration and checks</li>
+<li>A folder to develop the tests for the solution at <em>unit</em> and <em>system</em> level</li>
+<li>A folder for development tools (e.g. run linter, set environment, run tests)</li>
+</ul>
+<p>The repository was published <a href="https://github.com/Matech-Studios/Matech.Starvapp.RecipesRecomender.Analytics">here</a>. You can check how the initial structure was defined in <a href="https://github.com/Matech-Studios/Matech.Starvapp.RecipesRecomender.Analytics/pull/1">this Pull Request</a>, obtaining this:</p>
+<pre><code>  ├── README.md              &lt;- The top-level README for developers using this project
+  │      
+  ├── starvapprecom          &lt;- Core package of this project.
+  │   ├── approaches         &lt;- Module to develop approaches for recipes recommendations                           
+  │   ├── scrapers           &lt;- Module to handle scrapers of recipes      
+  │   └── utils              &lt;- Module to provide utils in general       
+  │                
+  ├── data                   &lt;- Folder for datasets to be used locally  
+  │
+  ├── docs                   &lt;- Project documentation and resources  
+  │
+  ├── notebooks              &lt;- Place to store all Jupyter notebooks  
+  │
+  ├── scripts                &lt;- Scripts to execute services and other functions  
+  │                
+  ├── tests                  &lt;- Unit and System tests of the core library  
+  │
+  ├── tools                  &lt;- Tools for the development of this project  
+  │
+  └─── requirements.txt      &lt;- File that specifies the dependencies for this project
+</code></pre>
 <h4 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h4>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>To be filled soon...</p>
-</div>
+<p>All the services in StarvApp are deployed through <a href="https://kubernetes.io/es/docs/concepts/overview/what-is-kubernetes/">Kubernetes</a>, so each of them must provide a <code>Dockerfile</code> that allows the DevOps team to achieve the actual deployment. Therefore, for this repository we provided:</p>
+<ul>
+<li>A <code>Dockerfile</code> that creates and serves the recommender solution</li>
+<li>A <code>Dockerfile_rabbitmq</code> that creates a RabbitMQ server for testing purposes</li>
+<li>A <code>docker-compose.yml</code> to configure the connection between these two previous services, for testing purposes.</li>
+</ul>
+<p>In addition, to allow an easy way to make local development, there are tools to create and use a <a href="https://pypi.org/project/virtualenv/">virtualenv</a> which is easier to handle for local tests.</p>
+<p>You can check both configurations in the actual code repository.</p>
 <h4 id="continuous-integration">Continuous Integration<a class="headerlink" href="#continuous-integration" title="Permanent link">&para;</a></h4>
-<p>Github Actions, and Azure Pipelines</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>To be filled soon...</p>
-</div>
+<p>The StarvApp has a Continuous Integration (CI) pipeline configured and handled by the DevOps team, so the CI is already managed in this work and the files explained in the Environment section are the contract to ensure correct integration. However, additionally a Github Actions workflow was configured for this repository to make the following checks:</p>
+<ul>
+<li>Smoke testing based on configured tests </li>
+<li>Code coverage along the releases</li>
+<li>Correct linting  </li>
+</ul>
+<p>You can check the configuration and current status in the project's README.</p>
                 
               
               

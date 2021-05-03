@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://github.com/Matech-Studios/1_understanding/">
       
       <link rel="icon" href="../img/matech.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6f955dcd.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e35208c4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
@@ -353,8 +353,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
-    Requirements
+  <a href="#definitions" class="md-nav__link">
+    Definitions
   </a>
   
 </li>
@@ -503,7 +503,7 @@
                 <h1 id="chapter-1-understanding">Chapter 1: Understanding<a class="headerlink" href="#chapter-1-understanding" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">Abstract</p>
-<p>This chapter covers the work done to understand the problem to solve and the context involved, in order to define the requirements for the solution. (<strong>8 min read</strong>)</p>
+<p>This chapter covers the work done to understand the problem to solve and the context involved, in order to define the requirements for the solution. (<strong>3 min read</strong>)</p>
 </div>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
 <!-- Write all the relevant context of the business or domain, and identify all needed resources to work on the solution -->
@@ -512,6 +512,14 @@
 <p>The solution described in this playbook is the service responsible for processing the user input (ingredients) and the available information on the App to recommend a top of recipes. </p>
 <p>At the moment of starting this solution, the StarvApp already has an architecture implemented with an application interacting with backend services, so the agreed scope for this work was to create a new service that helps the existing backend to solve the recipes recommendations.</p>
 <p>In addition, a database of recipes and ingredients was implemented and checked to ensure the available fields are enough to implement a recommendations schema. No data about users behavior was available, so the scope for the recommendations was focused on matching recipes and ingredients information.</p>
+<p>The stakeholders involved in this development are mainly the Product Owner of the application and the teams that develop the other services:  </p>
+<ul>
+<li>Frontend team, in charge of the UI and the UX of the application.  </li>
+<li>Backend team, in charge of the services of the application (endpoints, database, integrations).  </li>
+<li>Analytics team (which develops this service), in charge of extracting data analytics to enrich the information presented to the user.  </li>
+<li>DevOps team, in charge of the infrastructure where the application is deployed.  </li>
+</ul>
+<p>Finally, the application will be in Spanish language to allow a deployment in Argentina. Therefore, the text information to process will be in that language.</p>
 <h2 id="problem">Problem<a class="headerlink" href="#problem" title="Permanent link">&para;</a></h2>
 <!-- Identify and document the problem to solve, after some sessions of understanding with the stakeholders -->
 
@@ -531,10 +539,10 @@
 <p>For more details about the design of the poll, you can check the <a href="../how-to/poll_requirements/">How-To: Poll to Collect Requirements</a> document.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Ensure this poll is filled by stakeholders from different perspectives, even outside the project's team if possible, to ensure there are opinions biased by the project flow.</p>
+<p>Ensure this poll is filled by stakeholders from different perspectives, even outside the project if possible, to ensure there are opinions biased by the project flow.</p>
 </div>
-<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
-<!-- Define the requirements of the solution to develop, if possible in terms of users stories -->
+<h2 id="definitions">Definitions<a class="headerlink" href="#definitions" title="Permanent link">&para;</a></h2>
+<!-- State some definitions about the expected outcome for the solution to develop -->
 
 <p>Based on the understanding detailed, we defined the following required aspects on the solution to develop:</p>
 <ul>
