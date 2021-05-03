@@ -1,7 +1,7 @@
 # Chapter 1: Understanding
 
 !!! abstract "Abstract"
-    This chapter covers the work done to understand the problem to solve and the context involved, in order to define the requirements for the solution. (**8 min read**)
+    This chapter covers the work done to understand the problem to solve and the context involved, in order to define the requirements for the solution. (**3 min read**)
 
 ## Context
 
@@ -14,6 +14,15 @@ The solution described in this playbook is the service responsible for processin
 At the moment of starting this solution, the StarvApp already has an architecture implemented with an application interacting with backend services, so the agreed scope for this work was to create a new service that helps the existing backend to solve the recipes recommendations.
 
 In addition, a database of recipes and ingredients was implemented and checked to ensure the available fields are enough to implement a recommendations schema. No data about users behavior was available, so the scope for the recommendations was focused on matching recipes and ingredients information.
+
+The stakeholders involved in this development are mainly the Product Owner of the application and the teams that develop the other services:  
+
+- Frontend team, in charge of the UI and the UX of the application.  
+- Backend team, in charge of the services of the application (endpoints, database, integrations).  
+- Analytics team (which develops this service), in charge of extracting data analytics to enrich the information presented to the user.  
+- DevOps team, in charge of the infrastructure where the application is deployed.  
+
+Finally, the application will be in Spanish language to allow a deployment in Argentina. Therefore, the text information to process will be in that language.
 
 ## Problem
 
@@ -34,11 +43,11 @@ In order to understand the expected matching of recipes to have in this service,
 For more details about the design of the poll, you can check the [How-To: Poll to Collect Requirements](how-to/poll_requirements.md) document.
 
 !!! tip
-    Ensure this poll is filled by stakeholders from different perspectives, even outside the project's team if possible, to ensure there are opinions biased by the project flow.
+    Ensure this poll is filled by stakeholders from different perspectives, even outside the project if possible, to ensure there are opinions biased by the project flow.
 
-## Requirements
+## Definitions
 
-<!-- Define the requirements of the solution to develop, if possible in terms of users stories -->
+<!-- State some definitions about the expected outcome for the solution to develop -->
 
 Based on the understanding detailed, we defined the following required aspects on the solution to develop:
 
